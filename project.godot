@@ -16,6 +16,11 @@ run/main_scene="res://GameScreen/Game.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/mode=4
+window/vsync/vsync_mode=2
+
 [dotnet]
 
 project/assembly_name="trick"
@@ -23,3 +28,14 @@ project/assembly_name="trick"
 [gui]
 
 theme/custom="res://theme.theme"
+
+[physics]
+
+2d/run_on_separate_thread=true
+common/physics_ticks_per_second=120
+common/max_physics_steps_per_frame=16
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+viewport/hdr_2d=true
