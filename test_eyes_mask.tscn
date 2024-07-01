@@ -1,0 +1,302 @@
+[gd_scene load_steps=14 format=3 uid="uid://4rcf6gwpoddq"]
+
+[ext_resource type="PackedScene" uid="uid://bm1ayjuf68rt1" path="res://sound_manager.tscn" id="1_7h1me"]
+[ext_resource type="PackedScene" uid="uid://eukgvrn63758" path="res://eyes_mask.tscn" id="2_m8g4m"]
+[ext_resource type="PackedScene" uid="uid://cu3d7jxo4s3yr" path="res://gaosi_mask.tscn" id="3_lfrbo"]
+
+[sub_resource type="Shader" id="Shader_6xq47"]
+code = "shader_type canvas_item;
+
+uniform float param_x : hint_range(0.0, 10.0, 0.01) = 0.6;
+uniform float param_y : hint_range(0.0, 10.0, 0.01) = 0.3;
+uniform  vec4 orgin_color: source_color=vec4(0.0,0.0,0.0,1.0);
+
+
+void fragment(){
+    vec2 uv = UV;
+	vec4 tint_color  = vec4(1.0, 1.0, 1.0, 1.0);
+	
+	
+    // Calculate the oval shape alpha based on UV coordinates and parameters
+    float oval = (uv.x - 0.5) * (uv.x - 0.5) / (param_x * param_x) + (uv.y - 0.5) * (uv.y - 0.5) / (param_y * param_y);
+    
+    // Clamp the oval value to [0, 1] range
+    float alpha = clamp(oval, 0.0, 1.0);
+    
+    // Invert the alpha for the desired effect (since the oval value increases outside the ellipse)
+    alpha = 1.0 - alpha;
+    
+	COLOR=vec4(tint_color.rgb, alpha * tint_color.a);
+	if(COLOR.a>0.0){
+		COLOR.a=0.0;
+	}else{
+		COLOR.rgb=orgin_color.rgb;
+		COLOR.a=1.0;
+	}
+	
+	
+	}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8d1v"]
+resource_local_to_scene = true
+shader = SubResource("Shader_6xq47")
+shader_parameter/param_x = 0.1
+shader_parameter/param_y = 0.3
+shader_parameter/orgin_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_3183q"]
+code = "shader_type canvas_item;
+uniform sampler2D SCREEN_TEXTURE:hint_screen_texture,repeat_disable, filter_linear_mipmap;
+uniform float f:hint_range(0.0, 5.0, 0.1);
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	
+	
+	//高斯，模糊效果
+	COLOR.rgb=texture(SCREEN_TEXTURE,SCREEN_UV,f).rgb;
+	
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71lhw"]
+resource_local_to_scene = true
+shader = SubResource("Shader_3183q")
+shader_parameter/f = 5.0
+
+[sub_resource type="Animation" id="Animation_84noc"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/param_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/param_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.3, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../gaosi_mask:material:shader_parameter/f")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_a8h8i"]
+resource_name = "eyes"
+length = 1.2
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/param_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.1, -0.25, 0, 0.25, 0, 0.15, -0.25, 0, 0.25, 0, 0.15, -0.25, 0, 0.25, 0, 0.15, -0.25, 0, 0.25, 0, 0.3, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 0.6, -0.25, 0, 0.25, 0, 10, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/param_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.05, -0.25, 0, 0.25, 0, 0.05, -0.25, 0, 0.25, 0, 0.1, -0.25, 0, 0.25, 0, 0.15, -0.25, 0, 0.25, 0, 0.2, -0.25, 0, 0.25, 0, 0.3, -0.25, 0, 0.25, 0, 0.4, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 10, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../gaosi_mask:material:shader_parameter/f")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0, 3.2, -0.25, 0, 0.25, 0, 1.7, -0.25, 0, 0.25, 0, 0.85, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.6, 0.8, 1, 1.2)
+}
+
+[sub_resource type="Animation" id="Animation_2htse"]
+resource_name = "eyes_t"
+length = 1.2
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/param_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.6, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/param_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../gaosi_mask:material:shader_parameter/f")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 1.2)
+}
+
+[sub_resource type="Animation" id="Animation_uy3rv"]
+resource_name = "eyes_4"
+length = 1.2
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/param_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.6, -0.25, 0, 0.25, 0, 0.7, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/param_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.7, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../gaosi_mask:material:shader_parameter/f")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 1.2)
+}
+
+[sub_resource type="Animation" id="Animation_x7euk"]
+resource_name = "eyes_5"
+length = 1.5
+step = 0.1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/param_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.7, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/param_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.9, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../gaosi_mask:material:shader_parameter/f")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(5, -0.25, 0, 0.25, 0, 0.6, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fxuc4"]
+_data = {
+"RESET": SubResource("Animation_84noc"),
+"eyes": SubResource("Animation_a8h8i"),
+"eyes_4": SubResource("Animation_uy3rv"),
+"eyes_5": SubResource("Animation_x7euk"),
+"eyes_t": SubResource("Animation_2htse")
+}
+
+[node name="test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sound_manager" parent="." instance=ExtResource("1_7h1me")]
+layout_mode = 1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="EyesMask" parent="." instance=ExtResource("2_m8g4m")]
+
+[node name="ColorRect" parent="EyesMask" index="0"]
+material = SubResource("ShaderMaterial_v8d1v")
+
+[node name="gaosi_mask" parent="." instance=ExtResource("3_lfrbo")]
+material = SubResource("ShaderMaterial_71lhw")
+layout_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../EyesMask/ColorRect")
+libraries = {
+"": SubResource("AnimationLibrary_fxuc4")
+}
+autoplay = "eyes_4"
+playback_auto_capture_transition_type = 3
+playback_auto_capture_ease_type = 2
+speed_scale = 0.2
+
+[editable path="EyesMask"]

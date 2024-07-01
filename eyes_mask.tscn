@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://eukgvrn63758"]
+
+[sub_resource type="Shader" id="Shader_6xq47"]
+code = "shader_type canvas_item;
+
+uniform float param_x : hint_range(0.0, 10.0, 0.01) = 0.6;
+uniform float param_y : hint_range(0.0, 10.0, 0.01) = 0.3;
+uniform  vec4 orgin_color: source_color=vec4(0.0,0.0,0.0,1.0);
+
+
+void fragment(){
+    vec2 uv = UV;
+	vec4 tint_color  = vec4(1.0, 1.0, 1.0, 1.0);
+	
+	
+    // Calculate the oval shape alpha based on UV coordinates and parameters
+    float oval = (uv.x - 0.5) * (uv.x - 0.5) / (param_x * param_x) + (uv.y - 0.5) * (uv.y - 0.5) / (param_y * param_y);
+    
+    // Clamp the oval value to [0, 1] range
+    float alpha = clamp(oval, 0.0, 1.0);
+    
+    // Invert the alpha for the desired effect (since the oval value increases outside the ellipse)
+    alpha = 1.0 - alpha;
+    
+	COLOR=vec4(tint_color.rgb, alpha * tint_color.a);
+	if(COLOR.a>0.0){
+		COLOR.a=0.0;
+	}else{
+		COLOR.rgb=orgin_color.rgb;
+		COLOR.a=1.0;
+	}
+	
+	
+	}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i6ts4"]
+resource_local_to_scene = true
+shader = SubResource("Shader_6xq47")
+shader_parameter/param_x = 0.6
+shader_parameter/param_y = 0.3
+shader_parameter/orgin_color = Color(0, 0, 0, 1)
+
+[node name="EyesMask" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_i6ts4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
