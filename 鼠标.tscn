@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://db1ir0xvljfjd"]
+
+[ext_resource type="Texture2D" uid="uid://6vh18tgcfqpn" path="res://asset/鼠标.png" id="1_xhp3p"]
+
+[sub_resource type="GDScript" id="GDScript_t01xo"]
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	#position=get_global_mouse_position()
+	pass
+
+func _enter_tree() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+func  _exit_tree() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _input(event: InputEvent) -> void:
+	position=get_global_mouse_position()
+	pass
+"
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 128
+
+[node name="鼠标" type="Sprite2D" parent="."]
+z_index = 4096
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_xhp3p")
+region_enabled = true
+region_rect = Rect2(994, 668, 180, 266)
+script = SubResource("GDScript_t01xo")

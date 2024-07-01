@@ -1,6 +1,146 @@
-[gd_scene load_steps=2 format=3 uid="uid://drkqe0acrg18p"]
+[gd_scene load_steps=11 format=3 uid="uid://drkqe0acrg18p"]
 
 [ext_resource type="Script" path="res://GameScreen/CSharpScripts/Game.cs" id="1_wb7vv"]
+[ext_resource type="Texture2D" uid="uid://8qxl3tx23d4p" path="res://asset/桌子.png" id="2_6fhkr"]
+[ext_resource type="Texture2D" uid="uid://b8bsw3xqkqfy2" path="res://asset/棋子.png" id="3_ekys0"]
+[ext_resource type="Texture2D" uid="uid://2lceuja6tuht" path="res://asset/眼镜.png" id="4_vd5gc"]
+[ext_resource type="Texture2D" uid="uid://cmw6tjbfvk5sd" path="res://icon.svg" id="5_ine6e"]
+[ext_resource type="Texture2D" uid="uid://dm3yl50lm0sri" path="res://asset/头像框.png" id="5_x6bo3"]
 
-[node name="Game" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6nb5"]
+atlas = ExtResource("2_6fhkr")
+region = Rect2(0, -64, 2176, 1728)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7fku"]
+atlas = ExtResource("4_vd5gc")
+region = Rect2(64, 189, 640, 315)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61vn8"]
+atlas = ExtResource("3_ekys0")
+region = Rect2(1344, 567, 512, 693)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssesi"]
+atlas = ExtResource("5_x6bo3")
+region = Rect2(128, 128, 768, 256)
+
+[node name="Game(括号里面的内容是注释，可以看或者删除。 拉长窗体进行查看 )" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_wb7vv")
+
+[node name="桌子" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_j6nb5")
+expand_mode = 3
+
+[node name="CanvasLayer(道具层)" type="CanvasLayer" parent="."]
+
+[node name="眼镜" type="TextureRect" parent="CanvasLayer(道具层)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 149.0
+offset_right = 569.889
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_i7fku")
+expand_mode = 3
+
+[node name="棋子" type="TextureRect" parent="CanvasLayer(道具层)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 858.0
+offset_top = 244.0
+offset_right = 184.753
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_61vn8")
+expand_mode = 3
+
+[node name="对话框(看情况,结合使用，我还以为是人物面板呢)" type="CanvasLayer" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="对话框(看情况,结合使用，我还以为是人物面板呢)"]
+position = Vector2(51, 53)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("5_ine6e")
+
+[node name="TextureRect2" type="NinePatchRect" parent="对话框(看情况,结合使用，我还以为是人物面板呢)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 5.0
+offset_right = -83.0
+offset_bottom = -279.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_ssesi")
+region_rect = Rect2(0, 0, 768, 256)
+patch_margin_left = 256
+patch_margin_top = 96
+patch_margin_right = 96
+patch_margin_bottom = 96
+
+[node name="对话框(看情况,结合使用，我还以为是人物面板呢)2" type="CanvasLayer" parent="."]
+
+[node name="TextureRect2" type="NinePatchRect" parent="对话框(看情况,结合使用，我还以为是人物面板呢)2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 860.0
+offset_top = 466.0
+offset_right = 760.0
+offset_bottom = 182.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_ssesi")
+region_rect = Rect2(0, 0, 768, 256)
+patch_margin_left = 256
+patch_margin_top = 96
+patch_margin_right = 96
+patch_margin_bottom = 96
+
+[node name="Icon" type="Sprite2D" parent="对话框(看情况,结合使用，我还以为是人物面板呢)2/TextureRect2"]
+position = Vector2(136, 192)
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("5_ine6e")
+
+[node name="test(可删除，用对话框制作的人物面板)" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Icon" type="Sprite2D" parent="test(可删除，用对话框制作的人物面板)"]
+position = Vector2(64, 51)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("5_ine6e")
+
+[node name="TextureRect" type="TextureRect" parent="test(可删除，用对话框制作的人物面板)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 5.0
+offset_right = -83.0
+offset_bottom = -279.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_ssesi")
+expand_mode = 1
+stretch_mode = 4

@@ -16,9 +16,14 @@ run/main_scene="res://GameScreen/Game.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+mouse="*res://鼠标.tscn"
+
 [display]
 
-window/size/mode=4
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_width"
 window/vsync/vsync_mode=2
 window/size/always_on_top.editor=true
 

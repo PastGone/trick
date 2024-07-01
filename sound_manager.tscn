@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bm1ayjuf68rt1"]
 
-[ext_resource type="Texture2D" uid="uid://bc6xxnsxkdwgl" path="res://sound-manager-ui-box.png" id="1_50qtt"]
-[ext_resource type="FontFile" uid="uid://dfkixbooj00em" path="res://MeowSans.ttf" id="2_00uom"]
-[ext_resource type="Texture2D" uid="uid://b4hnpf2udc0fm" path="res://叉叉.png" id="2_rjtom"]
-[ext_resource type="Texture2D" uid="uid://bu4ygyrs2n0yi" path="res://声音无.png" id="3_u0d0x"]
-[ext_resource type="Texture2D" uid="uid://dybh11rlcutbv" path="res://声音打开.png" id="4_iia73"]
-[ext_resource type="Texture2D" uid="uid://bh03jbq1hgqrt" path="res://勾.png" id="6_svpu1"]
+[ext_resource type="Texture2D" uid="uid://ckgf4x5le6naw" path="res://asset/sound-manager-ui-box.png" id="1_50qtt"]
+[ext_resource type="FontFile" uid="uid://bjkyma7ecjdg2" path="res://asset/MeowSans.ttf" id="2_00uom"]
+[ext_resource type="Texture2D" uid="uid://c1vc7oummilg" path="res://asset/叉叉.png" id="2_rjtom"]
+[ext_resource type="Texture2D" uid="uid://rwaq2jhgiqrq" path="res://asset/声音无.png" id="3_u0d0x"]
+[ext_resource type="Texture2D" uid="uid://dwwy6xomchmxu" path="res://asset/声音打开.png" id="4_iia73"]
+[ext_resource type="Texture2D" uid="uid://ca4ucr7vfbd34" path="res://asset/勾.png" id="6_svpu1"]
 
 [sub_resource type="GDScript" id="GDScript_7tbmt"]
 script/source = "extends Control
