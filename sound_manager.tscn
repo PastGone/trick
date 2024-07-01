@@ -1,0 +1,311 @@
+[gd_scene load_steps=8 format=3 uid="uid://bm1ayjuf68rt1"]
+
+[ext_resource type="Texture2D" uid="uid://bc6xxnsxkdwgl" path="res://sound-manager-ui-box.png" id="1_50qtt"]
+[ext_resource type="FontFile" uid="uid://dfkixbooj00em" path="res://MeowSans.ttf" id="2_00uom"]
+[ext_resource type="Texture2D" uid="uid://b4hnpf2udc0fm" path="res://叉叉.png" id="2_rjtom"]
+[ext_resource type="Texture2D" uid="uid://bu4ygyrs2n0yi" path="res://声音无.png" id="3_u0d0x"]
+[ext_resource type="Texture2D" uid="uid://dybh11rlcutbv" path="res://声音打开.png" id="4_iia73"]
+[ext_resource type="Texture2D" uid="uid://bh03jbq1hgqrt" path="res://勾.png" id="6_svpu1"]
+
+[sub_resource type="GDScript" id="GDScript_7tbmt"]
+script/source = "extends Control
+@onready var bgm_progress_bar: HSlider = $NinePatchRect/bgm/ProgressBar
+@onready var sfx_progress_bar: HSlider = $NinePatchRect/sfx/ProgressBar
+
+var BUS :Dictionary={
+	\"bgm\": AudioServer.get_bus_index(\"bgm\"),
+	\"sfx\": AudioServer.get_bus_index(\"sfx\")
+}
+var sound_cofing_path:=\"user://sound_config.ini\"
+
+# Called when the node enters the scene tree for the first time.
+func load_config():
+	var config :=ConfigFile.new()
+	config.load(sound_cofing_path)
+	var bgm_v=config.get_value(\"audio\",\"bgm\",bgm_progress_bar.value)
+	var sfx_v=config.get_value(\"audio\",\"sfx\",sfx_progress_bar.value)
+	
+	set_volume(BUS.bgm,bgm_v)
+	set_volume(BUS.sfx,sfx_v)
+	pass
+func save_config():
+	var config :=ConfigFile.new()
+	config.set_value(\"audio\",\"bgm\",get_volume(BUS.bgm))
+	config.set_value(\"audio\",\"sfx\",get_volume(BUS.sfx))
+	config.save(sound_cofing_path)
+	pass
+
+
+func _ready() -> void:
+#	加载音频配置的的方法可以放在这里，也可以不放在这里
+	load_config()
+	pass 
+	
+#	初始化的时候，根据音频配置设置滑块的值
+	bgm_progress_bar.value=get_volume(BUS.bgm)
+	sfx_progress_bar.value=get_volume(BUS.sfx)
+	
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func get_volume(bus_index:int)->float:
+	return db_to_linear(AudioServer.get_bus_volume_db(bus_index))
+	
+func set_volume(bus_index:int,v: float)->void:
+	AudioServer.set_bus_volume_db(bus_index , linear_to_db(v) )
+
+
+func _on_bgm_progress_bar_value_changed(value: float) -> void:
+	set_volume(BUS.bgm, value)
+	pass # Replace with function body.
+
+
+func _on_sfx_progress_bar_value_changed(value: float) -> void:
+	set_volume(BUS.sfx,value)
+	pass # Replace with function body.
+
+
+func _on_cancel_button_button_up() -> void:
+	load_config()
+	pass # Replace with function body.
+
+
+func _on_yes_button_button_up() -> void:
+	save_config()
+	pass # Replace with function body.
+"
+
+[node name="sound_manager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 17.0
+offset_right = 4.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_7tbmt")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+self_modulate = Color(0.24, 0.348, 0.6, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.0
+offset_top = -228.0
+offset_right = 357.0
+offset_bottom = 177.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_50qtt")
+region_rect = Rect2(0, 0, 112, 32)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 71.0
+grow_horizontal = 2
+color = Color(0.144, 0.2088, 0.36, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="NinePatchRect"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1, -1, 1, 71, 97, 71, 145, -1)
+
+[node name="Polygon2D2" type="Polygon2D" parent="NinePatchRect"]
+color = Color(0.71, 0.0639, 0.0639, 1)
+polygon = PackedVector2Array(1, -1, 1, 63, 89, 63, 137, -1)
+
+[node name="cancel" type="TextureButton" parent="NinePatchRect/Polygon2D2"]
+offset_left = 9.0
+offset_right = 113.0
+offset_bottom = 63.0
+texture_normal = ExtResource("2_rjtom")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("2_00uom")
+theme_override_font_sizes/font_size = 48
+text = "声音设置"
+horizontal_alignment = 1
+
+[node name="bgm" type="Control" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 62.0
+offset_top = -38.5
+offset_right = -44.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/bgm"]
+layout_mode = 0
+offset_left = 26.0
+offset_right = 66.0
+offset_bottom = 30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_00uom")
+theme_override_font_sizes/font_size = 20
+text = "音乐"
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/bgm"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -30.5
+offset_right = 120.0
+offset_bottom = 9.5
+grow_vertical = 2
+texture = ExtResource("3_u0d0x")
+expand_mode = 1
+
+[node name="ProgressBar" type="HSlider" parent="NinePatchRect/bgm"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 118.0
+offset_top = -22.5
+offset_right = -72.0
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+value = 20.0
+
+[node name="TextureRect2" type="TextureRect" parent="NinePatchRect/bgm"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -28.0
+offset_right = -4.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("4_iia73")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="sfx" type="Control" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 62.0
+offset_top = 32.5
+offset_right = -44.0
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/sfx"]
+layout_mode = 0
+offset_left = 26.0
+offset_right = 66.0
+offset_bottom = 30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_00uom")
+theme_override_font_sizes/font_size = 20
+text = "音效"
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/sfx"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -30.5
+offset_right = 120.0
+offset_bottom = 9.5
+grow_vertical = 2
+texture = ExtResource("3_u0d0x")
+expand_mode = 1
+
+[node name="ProgressBar" type="HSlider" parent="NinePatchRect/sfx"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 118.0
+offset_top = -22.5
+offset_right = -72.0
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+value = 40.0
+
+[node name="TextureRect2" type="TextureRect" parent="NinePatchRect/sfx"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -28.0
+offset_right = -4.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("4_iia73")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Polygon2D3" type="Polygon2D" parent="NinePatchRect"]
+position = Vector2(289, 335)
+color = Color(1, 0.2, 0.2, 1)
+polygon = PackedVector2Array(0, 0, -16, 56, 120, 56, 136, 0)
+
+[node name="yes" type="TextureButton" parent="NinePatchRect/Polygon2D3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 120.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_svpu1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="button_up" from="NinePatchRect/Polygon2D2/cancel" to="." method="_on_cancel_button_button_up"]
+[connection signal="value_changed" from="NinePatchRect/bgm/ProgressBar" to="." method="_on_bgm_progress_bar_value_changed"]
+[connection signal="value_changed" from="NinePatchRect/sfx/ProgressBar" to="." method="_on_sfx_progress_bar_value_changed"]
+[connection signal="button_up" from="NinePatchRect/Polygon2D3/yes" to="." method="_on_yes_button_button_up"]
