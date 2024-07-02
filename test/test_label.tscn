@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://biw8f25fps6py"]
+
+[ext_resource type="Texture2D" uid="uid://dwbimpr7tscxk" path="res://asset/sound-manager-ui-box.png" id="1_bapbi"]
+
+[node name="test_label" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 93.0
+offset_top = -130.0
+offset_right = -194.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_bapbi")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8

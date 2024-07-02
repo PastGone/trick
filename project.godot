@@ -12,24 +12,29 @@ config_version=5
 
 config/name="trick"
 config/version="0.0.1"
-run/main_scene="res://GameScreen/Game.tscn"
+run/main_scene="res://test/test_eyes_mask.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
+[dialogue_manager]
 
-mouse="*res://鼠标.tscn"
+general/uses_dotnet=true
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 window/vsync/vsync_mode=2
+mouse_cursor/custom_image="res://asset/鼠标.png"
 window/size/always_on_top.editor=true
 
 [dotnet]
 
 project/assembly_name="trick"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg")
 
 [gui]
 

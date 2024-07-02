@@ -1,0 +1,192 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3 uid="uid://cohu48v5rp2dn"]
+
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueData.gd" id="1_esxbc"]
+
+[resource]
+script = ExtResource("1_esxbc")
+starts = {
+"START": &"0_1"
+}
+nodes = {
+"0_1": {
+"link": &"1_1",
+"offset": Vector2(-1934, -360),
+"start_id": "START"
+},
+"1_1": {
+"dialogue": "欢迎来到本届《生死问答》大挑战的比赛现场！我是你们的老朋友Freddy！",
+"offset": Vector2(-1500, -780),
+"options": {
+0: {
+"condition": {},
+"link": &"1_2",
+"text": ""
+}
+},
+"size": Vector2(600, 800),
+"speaker": 0
+},
+"1_10": {
+"dialogue": "看来你是一个睿智的人",
+"offset": Vector2(3300, 120),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300.001, 345),
+"speaker": 0
+},
+"1_11": {
+"dialogue": "看来你是一个开阔的人",
+"offset": Vector2(3240, 700),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 345),
+"speaker": 0
+},
+"1_2": {
+"dialogue": "这是一场赌上一切的问答游戏！只要一直回答正确，就能实现你内心深处的愿望！一切、皆有可能！",
+"offset": Vector2(-830, -380),
+"options": {
+0: {
+"condition": {},
+"link": &"1_5",
+"text": ""
+}
+},
+"size": Vector2(500, 740),
+"speaker": 0
+},
+"1_3": {
+"dialogue": "我……我是谁？",
+"offset": Vector2(198, -404),
+"options": {
+0: {
+"condition": {},
+"link": &"1_4",
+"text": "sam"
+},
+1: {
+"condition": {},
+"link": &"3_1",
+"text": "咦"
+}
+},
+"size": Vector2(368, 771),
+"speaker": 1
+},
+"1_4": {
+"dialogue": "好的！恭喜你答对了第一道问题！我们将给予你最重要的【主界面】作为奖励！现在，你可以看到你的画面信息了！",
+"offset": Vector2(700, -680),
+"options": {
+0: {
+"condition": {},
+"link": &"1_6",
+"text": ""
+}
+},
+"size": Vector2(659.998, 940),
+"speaker": 0
+},
+"1_5": {
+"dialogue": "那么，这将是本场的第一个问题——【你是谁？】",
+"offset": Vector2(-282, -400),
+"options": {
+0: {
+"condition": {},
+"link": &"1_3",
+"text": ""
+}
+},
+"size": Vector2(416, 727),
+"speaker": 0
+},
+"1_6": {
+"dialogue": "【主界面】？我好像没有看到什么变化……",
+"offset": Vector2(1520, -720),
+"options": {
+0: {
+"condition": {},
+"link": &"3_2",
+"text": ""
+}
+},
+"size": Vector2(379.999, 620),
+"speaker": 1
+},
+"1_7": {
+"dialogue": "你发现了世界的秘密",
+"offset": Vector2(3220, -620),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 420),
+"speaker": "程序员"
+},
+"1_8": {
+"dialogue": "奇怪，桌子打开了。",
+"offset": Vector2(900, 620),
+"options": {
+0: {
+"condition": {},
+"link": &"1_9",
+"text": ""
+}
+},
+"size": Vector2(300, 406),
+"speaker": 1
+},
+"1_9": {
+"dialogue": "一副棋子和一副眼镜。你可以选择其一",
+"offset": Vector2(1460, 520),
+"options": {
+0: {
+"condition": {},
+"link": &"3_3",
+"text": "选择眼镜"
+},
+1: {
+"condition": {},
+"link": &"3_4",
+"text": "选择棋子"
+}
+},
+"size": Vector2(459.997, 640),
+"speaker": 0
+},
+"3_1": {
+"link": &"1_8",
+"offset": Vector2(473.298, 677.133),
+"signalValue": "openbox"
+},
+"3_2": {
+"link": &"1_7",
+"offset": Vector2(2255.46, -472.543),
+"signalValue": "openui"
+},
+"3_3": {
+"link": &"1_10",
+"offset": Vector2(2960, 60),
+"signalValue": "selectchess"
+},
+"3_4": {
+"link": &"1_11",
+"offset": Vector2(2540, 1020),
+"signalValue": "selectglasses"
+}
+}
+variables = {}
+strays = Array[String]([])
+characters = "res://演出角色.tres"

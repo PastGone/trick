@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterList" load_steps=5 format=3 uid="uid://crfckinmjm605"]
+
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/Character.gd" id="1_mtwci"]
+[ext_resource type="Resource" uid="uid://f3wndye1xv4n" path="res://主持人.tres" id="2_b0y6q"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/CharacterList.gd" id="2_shvpv"]
+[ext_resource type="Resource" uid="uid://4ews7aicxg65" path="res://主角_疑惑.tres" id="3_hu42k"]
+
+[resource]
+script = ExtResource("2_shvpv")
+characters = Array[ExtResource("1_mtwci")]([ExtResource("2_b0y6q"), ExtResource("3_hu42k")])

@@ -1,0 +1,117 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3 uid="uid://cnv2ls7co5i22"]
+
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueData.gd" id="1_6k1t8"]
+
+[resource]
+script = ExtResource("1_6k1t8")
+starts = {
+"START": &"0_1"
+}
+nodes = {
+"0_1": {
+"link": &"1_1",
+"offset": Vector2(-40, -500),
+"start_id": "START"
+},
+"1_1": {
+"dialogue": "这我说的，第一句话",
+"offset": Vector2(900, -740),
+"options": {
+0: {
+"condition": {
+"operator": 0,
+"value1": "111",
+"value2": "aaa"
+},
+"link": &"4_1",
+"text": "这是条件选项"
+},
+1: {
+"condition": {},
+"link": &"4_1",
+"text": "这是默认选项"
+}
+},
+"size": Vector2(300, 483),
+"speaker": "测试员"
+},
+"1_2": {
+"dialogue": "[wait]
+{{aaa}}
+
+[/wait]",
+"offset": Vector2(2060, -700),
+"options": {
+0: {
+"condition": {
+"operator": 0,
+"value1": "aaa",
+"value2": "111"
+},
+"link": &"3_1",
+"text": "没错，就是这样。 "
+},
+1: {
+"condition": {},
+"link": &"3_1",
+"text": "1111"
+}
+},
+"size": Vector2(300, 483),
+"speaker": "测试员"
+},
+"1_3": {
+"dialogue": "发射信号测试
+",
+"offset": Vector2(3148.93, -585.801),
+"options": {
+0: {
+"condition": {},
+"link": "END",
+"text": ""
+}
+},
+"size": Vector2(300, 359),
+"speaker": "测试员"
+},
+"2_1": {
+"comment": "不知道有啥用。 
+用来写一个观察。 
+
+{{变量名}}",
+"offset": Vector2(800, -40),
+"size": Vector2(900, 1020)
+},
+"3_1": {
+"link": &"1_3",
+"offset": Vector2(2800, -560),
+"signalValue": "{{aaa}}"
+},
+"4_1": {
+"link": &"1_2",
+"offset": Vector2(1480, -620),
+"type": 0,
+"value": "111",
+"variable": "aaa"
+},
+"5_1": {
+"false": "END",
+"offset": Vector2(1880, 40),
+"operator": 0,
+"true": "END",
+"value1": "",
+"value2": ""
+}
+}
+variables = {
+"1111": {
+"type": 2,
+"value": 1111
+},
+"aaa": {
+"type": 4,
+"value": ""
+}
+}
+strays = Array[String](["5_1", "2_1"])
+characters = ""

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://f3wndye1xv4n"]
+
+[ext_resource type="Texture2D" uid="uid://dquot53v2tbro" path="res://icon.svg" id="1_vpel8"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/Character.gd" id="2_0rmwe"]
+
+[resource]
+script = ExtResource("2_0rmwe")
+name = "主持人"
+image = ExtResource("1_vpel8")
+color = Color(1, 1, 1, 1)

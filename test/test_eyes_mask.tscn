@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://4rcf6gwpoddq"]
+[gd_scene load_steps=15 format=3 uid="uid://4rcf6gwpoddq"]
 
-[ext_resource type="PackedScene" uid="uid://bm1ayjuf68rt1" path="res://sound_manager.tscn" id="1_7h1me"]
+[ext_resource type="PackedScene" uid="uid://drkqe0acrg18p" path="res://GameScreen/Game.tscn" id="1_15xus"]
 [ext_resource type="PackedScene" uid="uid://eukgvrn63758" path="res://eyes_mask.tscn" id="2_m8g4m"]
 [ext_resource type="PackedScene" uid="uid://cu3d7jxo4s3yr" path="res://gaosi_mask.tscn" id="3_lfrbo"]
 
@@ -265,6 +265,26 @@ _data = {
 "eyes_t": SubResource("Animation_2htse")
 }
 
+[sub_resource type="GDScript" id="GDScript_iiylo"]
+script/source = "extends AnimationPlayer
+@onready var eyes_mask: CanvasLayer = $\"../EyesMask\"
+
+@onready var gaosi_mask: ColorRect = $\"../gaosi_mask\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	self.play(\"eyes_4\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if not self.is_playing():
+		gaosi_mask.visible=false
+		eyes_mask.visible=false
+	pass
+"
+
 [node name="test" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -273,12 +293,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="sound_manager" parent="." instance=ExtResource("1_7h1me")]
+[node name="Game(括号里面的内容是注释，可以看或者删除。 拉长窗体进行查看 )" parent="." instance=ExtResource("1_15xus")]
 layout_mode = 1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="EyesMask" parent="." instance=ExtResource("2_m8g4m")]
 
@@ -294,9 +310,9 @@ root_node = NodePath("../EyesMask/ColorRect")
 libraries = {
 "": SubResource("AnimationLibrary_fxuc4")
 }
-autoplay = "eyes_4"
 playback_auto_capture_transition_type = 3
 playback_auto_capture_ease_type = 2
 speed_scale = 0.2
+script = SubResource("GDScript_iiylo")
 
 [editable path="EyesMask"]
